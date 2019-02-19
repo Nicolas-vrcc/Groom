@@ -1,48 +1,56 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react'
+import { UserContext } from './UserProvider';
 
+const RegisterForm = () => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+    const { setUser } = useContext(UserContext)
 
-class RegisterForm extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { email: '', password: '' };
-
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleChange(event) {
-        let name = event.target.name
-        this.setState({ [name]: event.target.value });
-    }
-
-    handleSubmit(event) {
-        alert('User email : ' + this.state.email);
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
         // posts user to database
-        fetch('/user', {
+        await fetch('/user', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                "email": this.state.email,
-                "password": this.state.password
-            })
+            body: JSON.stringify({ username, password })
         })
+        setLoading(false)
+        setUser({ username })
     }
 
-    render() {
-        return (
-            <div>
-                <p>Pick a username</p>
-                <form onSubmit={this.handleSubmit}>
-                    <input type="text" value={this.state.email} name="email" onChange={this.handleChange}/>
-                    <input type="text" value={this.state.password} name="password" onChange={this.handleChange}/>
-                    <input type="submit"/>
-                </form>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <p>Pick a username</p>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Username
+                    <input
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </label>
+                <label>
+                    Password
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </label>
+                <input
+                    type="submit"
+                    disabled={loading}
+                    value={loading ? 'Signing up...' : 'Sign up'}
+                />
+            </form>
+        </div>
+    )
 }
+
 export default RegisterForm;

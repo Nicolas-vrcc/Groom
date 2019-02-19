@@ -22,6 +22,9 @@ const userRouter = new UserRouterClass();
 Définition des routes
 */
 apiRouter.use('/user', userRouter.init());
+apiRouter.get('/test', (req, res) => {
+  res.json({ message: 'test API route' })
+})
 //
 
 /* 

@@ -9,7 +9,8 @@ Config
 */
 const dbConnect = () => {
     return new Promise((resolve, reject) => {
-
+        // Eviter les warnings
+        mongoose.set('useCreateIndex', true)
         // Connecter la BDD
         mongoose.connect(
             'mongodb://127.0.0.1/chatio',

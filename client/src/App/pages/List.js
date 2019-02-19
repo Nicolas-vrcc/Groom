@@ -1,53 +1,45 @@
-import React, { Component } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { UserContext } from '../components/UserProvider';
+import RegisterForm from '../components/RegisterForm';
 
-class List extends Component {
-    // Initialize the state
-    constructor(props) {
-        super(props);
-        this.state = {
-            list: []
-        }
-    }
-
+const List = () => {
+    const [lists, setLists] = useState([])
+    const { user, setUser } = useContext(UserContext)
+    
     // Fetch the list on first mount
-    componentDidMount() {
-        this.getList();
-    }
-
+    useEffect(() => {
+        getList()
+    }, [])
+    
     // Retrieves the list of items from the Express app
-    getList = () => {
-        fetch('/user')
-            .then(res => res.json())
-            .then(list => this.setState({ list }))
+    const getList = async () => {
+        const res = await fetch('/user')
+        const user = await res.json()
+        setUser(user)
     }
-
-    render() {
-        const { list } = this.state;
-
-        return (
-            <div className="App">
-                <h1>List of Items</h1>
-                {/* Check to see if any items are found*/}
-                {list.length ? (
-                    <div>
-                        {/* Render the list of items */}
-                        {list.map((item) => {
-                            return (
-                                <div>
-                                    {item}
-                                </div>
-                            );
-                        })}
-                    </div>
-                ) : (
+    
+    if (user == null) return <RegisterForm />
+    return (
+        <div className="App">
+            <h1>List of Items</h1>
+            {/* Check to see if any items are found */}
+            {lists && lists.length ? (
+                <div>
+                    {/* Render the list of items */}
+                    {lists.map((item) => (
                         <div>
-                            <h2>No List Items Found</h2>
+                            {item}
                         </div>
-                    )
-                }
-            </div>
-        );
-    }
+                    ))}
+                </div>
+            ) : (
+                    <div>
+                        <h2>No List Items Found</h2>
+                    </div>
+                )
+            }
+        </div>
+    )
 }
 
-export default List;
+export default List

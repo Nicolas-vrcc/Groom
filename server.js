@@ -17,7 +17,7 @@ class ServerCLass{
         app.use(express.static(path.join(__dirname, 'client/build')));
 
         // Setup the API routes
-        app.use('/', mainRouter);
+        app.use('/api', mainRouter);
 
         // Handles any requests that don't match the ones above
         app.get('*', (req, res) => {

@@ -15,8 +15,9 @@ Definition
         routes(){
             // Create
             userRouter.post( '/', (req, res) => {
+                const { username, password } = req.body
                 if(req.body){
-                    User.create({ email: "nicolas@hetic.couille", "password": "nibba" }, function (err, small) {
+                    User.create({ username, password }, function (err, small) {
                         if (err) return handleError(err);
                         // saved!
                     })
