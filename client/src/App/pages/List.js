@@ -6,16 +6,17 @@ const List = () => {
     const [lists, setLists] = useState([])
     const { user, setUser } = useContext(UserContext)
     
-    // Fetch the list on first mount
+    // Fetch the list on first mount, set title
     useEffect(() => {
+        document.title = 'All users'
         getList()
     }, [])
     
     // Retrieves the list of items from the Express app
     const getList = async () => {
         const res = await fetch('/user')
-        const user = await res.json()
-        setUser(user)
+        // const user = await res.json()
+        // setUser(user)
     }
     
     if (user == null) return <RegisterForm />

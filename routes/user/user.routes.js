@@ -1,57 +1,52 @@
-/* 
-Import & config
+/*
+Imports
 */
-    const express = require('express');
-    const userRouter = express.Router();
-    const User = require('../../models/user.model')
-//
+const express = require('express')
+const userRouter = express.Router({ mergeParams: true })
+const { signup, login } = require('./user.controller')
 
-/* 
-Definition
+/*
+Routes definition
 */
-    class UserRouterClass {
-        constructor(){}
-
-        routes(){
-            // Create
-            userRouter.post( '/', (req, res) => {
-                const { username, password } = req.body
-                if(req.body){
-                    User.create({ username, password }, function (err, small) {
-                        if (err) return handleError(err);
-                        // saved!
-                    })
-                    res.json({ msg: "Created User", body: req.body })
-                }else{
-                    res.json({ msg: "Error" })
-                }
-            })
-
-            // Read
-            userRouter.get( '/', (req, res) => {
-                res.json( ["guy 1", "guy 2", "guy 3"])
-            })
-
-            // Update
-            userRouter.put( '/', (req, res) => {
-                res.json( { msg: "Update Post" } )
-            })
-
-            // Delete
-            userRouter.delete( '/', (req, res) => {
-                res.json( { msg: "Delete Post" } )
-            })
-        }
-
-        init(){
-            this.routes();
-            return userRouter;
-        }
+class UserRouterClass {
+    constructor({ passport }) {
+        this.passport = passport
     }
-//
 
-/* 
+    routes() {
+        // Get current user
+        userRouter.get('/', this.passport.authenticate('jwt', { session: false }), (req, res) => {
+            res.json({ user: 'leol' })
+        })
+        // userRouter.get('/', this.passport.authenticate('jwt', { session: false }), (req, res) => {
+        //     console.log('inside ')
+        //     res.json({ user: req.body })
+        // })
+
+        // Signup user
+        userRouter.post('/signup', (req, res) => {
+            // Use controller function
+            signup(req.body)
+                .then(apiResponse => res.json(apiResponse))
+                .catch(apiResponse => res.json(apiResponse))
+        })
+
+        // Login
+        userRouter.post('/login', (req, res) => {
+            // Use controller function
+            login(req.body, res)
+                .then(apiResponse => res.json(apiResponse))
+                .catch(apiResponse => res.json(apiResponse))
+        })
+    }
+
+    init() {
+        this.routes()
+        return userRouter
+    }
+}
+
+/*
 Export
 */
-module.exports = UserRouterClass;
-//
+module.exports = UserRouterClass

@@ -2,6 +2,7 @@
 Imports
 */
 const mongoose = require('mongoose')
+require('dotenv').config()
 //
 
 /* 
@@ -13,10 +14,10 @@ const dbConnect = () => {
         mongoose.set('useCreateIndex', true)
         // Connecter la BDD
         mongoose.connect(
-            'mongodb://127.0.0.1/chatio',
+            process.env.DB_URL,
             { useNewUrlParser: true }
         )
-            .then(db => resolve('mongodb://127.0.0.1/chatio'))
+            .then(db => resolve(process.env.DB_URL))
             .catch(error => reject(error));
     });
 }

@@ -35,6 +35,7 @@ const RegisterForm = () => {
                         onChange={(e) => setUsername(e.target.value)}
                     />
                 </label>
+                <br />
                 <label>
                     Password
                     <input
@@ -43,6 +44,7 @@ const RegisterForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </label>
+                <br />
                 <input
                     type="submit"
                     disabled={loading}

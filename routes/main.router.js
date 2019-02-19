@@ -1,34 +1,32 @@
 /*
 Imports
 */
-// Nodejs
-const { Router } = require('express');
+const { Router } = require('express')
+const UserRouterClass = require('./user/user.routes')
 
-// Inner
-const UserRouterClass = require('./user/user.routes.js');
-//
+// Setup passport
+const passport = require('passport');
+const { setAuthentication } = require('../services/authentication');
+setAuthentication(passport);
 
 /* 
 Definition des router
 */
 // Parent
-const apiRouter = Router();
+const apiRouter = Router()
 
 // Child
-const userRouter = new UserRouterClass();
+const userRouter = new UserRouterClass({ passport })
 //
 
 /* 
 Définition des routes
 */
-apiRouter.use('/user', userRouter.init());
-apiRouter.get('/test', (req, res) => {
-  res.json({ message: 'test API route' })
-})
+apiRouter.use('/user', userRouter.init())
 //
 
 /* 
 Export
 */
-module.exports = apiRouter;
+module.exports = apiRouter
 //
