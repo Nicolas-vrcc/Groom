@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { UserContext } from './UserProvider';
 
-const RegisterForm = () => {
+const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
@@ -11,8 +11,9 @@ const RegisterForm = () => {
         e.preventDefault()
         setLoading(true)
         // posts user to database
-        await fetch('/user', {
+        const response = await fetch('/user/login', {
             method: 'POST',
+            credentials: 'include',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -20,12 +21,15 @@ const RegisterForm = () => {
             body: JSON.stringify({ username, password })
         })
         setLoading(false)
-        setUser({ username })
-    }
+        if (response.ok) {
+            const userResponse = await response.json()
+            setUser(userResponse.user)
+        }
+}
 
     return (
         <div>
-            <p>Pick a username</p>
+            <h2>Login if you have an account</h2>
             <form onSubmit={handleSubmit}>
                 <label>
                     Username
@@ -48,11 +52,11 @@ const RegisterForm = () => {
                 <input
                     type="submit"
                     disabled={loading}
-                    value={loading ? 'Signing up...' : 'Sign up'}
+                    value={loading ? 'Loging in...' : 'Login'}
                 />
             </form>
         </div>
     )
 }
 
-export default RegisterForm;
+export default Login

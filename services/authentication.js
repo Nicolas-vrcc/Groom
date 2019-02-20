@@ -11,10 +11,7 @@ Service definition
 // Extract token from cookie
 const cookieExtractor = (req) => {
     let token = null
-    // console.log('extractor req', req)
-    console.log(req.cookies)
     if (req && req.cookies) {
-        console.log('cookies are set')
         token = req.cookies['groom-token']
     }
     return token

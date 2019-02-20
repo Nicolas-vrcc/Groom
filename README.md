@@ -13,4 +13,5 @@
 1. `cd client`
 2. `npm install`
 3. `npm start`
-3. Open [http://localhost:3000](http://localhost:3000) on your browser
+4. Open [http://localhost:3000](http://localhost:3000) on your browser
+5. To logout: Chrome Devtools > Application > Cookies > delete `groom-token`

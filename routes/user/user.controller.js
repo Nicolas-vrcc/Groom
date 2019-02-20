@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs')
 /*
 Functions
 */
-function signup(body) {
+function signup(body, res) {
     // Search for user
     return new Promise((resolve, reject) => {
         UserModel.findOne({ username: body.username }, (error, user) => {
@@ -29,18 +29,21 @@ function signup(body) {
                         body.password = hashedPassword
 
                         // Save user
-                        UserModel.create(body, (error, newUser) => {
+                        UserModel.create(body, (error, user) => {
                             if (error) { // Mongo error
-                                return reject(error)
+                                reject(error)
                             }
                             else { // User registrated
-                                return resolve({ user: newUser })
+                                // Set cookie
+                                const token = user.generateJwt()
+                                res.cookie("groom-token", token)
+                                resolve({ user })
                             }
                         })
                     })
                     .catch(hashError => {
                         console.log('error', hashError)
-                        return reject(hashError)
+                        reject(hashError)
                     })
             }
         })
@@ -49,7 +52,6 @@ function signup(body) {
 
 function login(body, res) {
     return new Promise((resolve, reject) => {
-        console.log('inside login promise')
         UserModel.findOne({ username: body.username }, (error, user) => {
             if (error) reject(error)
             else if (!user) reject('Unknow user')
@@ -60,11 +62,10 @@ function login(body, res) {
                     reject('Password not valid')
                 } else {
                     // Set cookie
-                    console.log('all good, setting cookie')
                     const token = user.generateJwt()
                     res.cookie("groom-token", token)
                     // Resolve user data
-                    resolve({ user, token })
+                    resolve({ user })
                 }
             }
         })

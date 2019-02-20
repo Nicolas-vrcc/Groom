@@ -16,17 +16,13 @@ class UserRouterClass {
     routes() {
         // Get current user
         userRouter.get('/', this.passport.authenticate('jwt', { session: false }), (req, res) => {
-            res.json({ user: 'leol' })
+            res.json({ user: req.user })
         })
-        // userRouter.get('/', this.passport.authenticate('jwt', { session: false }), (req, res) => {
-        //     console.log('inside ')
-        //     res.json({ user: req.body })
-        // })
 
         // Signup user
         userRouter.post('/signup', (req, res) => {
             // Use controller function
-            signup(req.body)
+            signup(req.body, res)
                 .then(apiResponse => res.json(apiResponse))
                 .catch(apiResponse => res.json(apiResponse))
         })
