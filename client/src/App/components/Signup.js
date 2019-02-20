@@ -5,6 +5,7 @@ const Signup = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
     const { setUser } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
@@ -21,9 +22,11 @@ const Signup = () => {
             body: JSON.stringify({ username, password })
         })
         setLoading(false)
+        const userResponse = await response.json()
         if (response.ok) {
-            const userResponse = await response.json()
             setUser(userResponse.user)
+        } else {
+            setError(userResponse.message)
         }
     }
 
@@ -49,6 +52,7 @@ const Signup = () => {
                     />
                 </label>
                 <br />
+                {error ? <p>Error: {error}</p> : null}
                 <input
                     type="submit"
                     disabled={loading}

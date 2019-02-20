@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Signup from '../components/Signup'
 import Login from '../components/Login'
 import { UserContext } from '../components/UserProvider'
+import Logout from '../components/Logout';
 
 async function getUser(setUser, setLoading) {
     const response = await fetch('/user', { credentials: 'include' })
@@ -30,6 +31,7 @@ const Home = () => {
             {isLoggedIn ?
                 <div>
                     <h2>Hello {user.username}</h2>
+                    <Logout />
                 </div>
                 :
                 <div>

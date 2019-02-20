@@ -31,7 +31,7 @@ function signup(body, res) {
                         // Save user
                         UserModel.create(body, (error, user) => {
                             if (error) { // Mongo error
-                                reject(error)
+                                reject({ message: error })
                             }
                             else { // User registrated
                                 // Set cookie
@@ -54,12 +54,12 @@ function login(body, res) {
     return new Promise((resolve, reject) => {
         UserModel.findOne({ username: body.username }, (error, user) => {
             if (error) reject(error)
-            else if (!user) reject('Unknow user')
+            else if (!user) reject({ message: 'Invalid password or username' })
             else {
                 // Check password
                 const validPassword = bcrypt.compareSync(body.password, user.password)
                 if (!validPassword) {
-                    reject('Password not valid')
+                    reject({ message: 'Invalid password or username' })
                 } else {
                     // Set cookie
                     const token = user.generateJwt()
@@ -72,11 +72,15 @@ function login(body, res) {
     })
 }
 
+function logout(req, res) {
+    req.logout()
+    res.status(200)
+        .clearCookie('connect.sid', { path: '/' })
+        .json({ status: "Success" })
+}
+
 /*
 Export
 */
-module.exports = {
-    signup,
-    login
-}
+module.exports = { signup, login, logout }
 //

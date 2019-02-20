@@ -5,12 +5,13 @@ const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
     const { setUser } = useContext(UserContext)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        // posts user to database
+        // Save user to database
         const response = await fetch('/user/login', {
             method: 'POST',
             credentials: 'include',
@@ -20,12 +21,14 @@ const Login = () => {
             },
             body: JSON.stringify({ username, password })
         })
-        setLoading(false)
+        const userResponse = await response.json()
         if (response.ok) {
-            const userResponse = await response.json()
             setUser(userResponse.user)
+        } else {
+            setError(userResponse.message)
         }
-}
+        setLoading(false)
+    }
 
     return (
         <div>
@@ -49,6 +52,7 @@ const Login = () => {
                     />
                 </label>
                 <br />
+                {error ? <p>Error: {error}</p> : null}
                 <input
                     type="submit"
                     disabled={loading}
