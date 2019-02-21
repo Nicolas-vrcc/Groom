@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { UserContext } from './UserProvider'
-import { deleteCookie } from '../../services/cookies';
+import { deleteCookie } from '../services/cookies'
 
 const Logout = () => {
   const { setUser } = useContext(UserContext)
