@@ -1,9 +1,10 @@
 const express = require('express')
 const path = require('path')
-const mainRouter = require('./routes/main.router')
-const dbConnect = require('./services/dbconnect')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const mainRouter = require('./routes/main.router')
+const dbConnect = require('./services/dbconnect')
+const handleErrors = require('./services/error')
 
 const app = express()
 
@@ -27,6 +28,9 @@ class ServerCLass{
         app.get('*', (req, res) => {
             res.sendFile(path.join(__dirname + '/client/build/index.html'))
         })
+
+        // Handle uncaught errors
+        app.use(handleErrors)
 
         this.launch()
     }

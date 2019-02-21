@@ -36,8 +36,6 @@ const authJwt = (passport) => {
         })
     }))
 }
-// 
-
 
 /*
 Export service
