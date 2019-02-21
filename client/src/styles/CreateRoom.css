@@ -1,0 +1,17 @@
+.CreateRoom {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.CreateRoom input:first-child {
+  flex: auto;
+  line-height: 2.4rem;
+  margin-right: 5px;
+}
+
+/* .CreateRoom button {
+  width: 100px;
+} */
