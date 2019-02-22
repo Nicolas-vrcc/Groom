@@ -3,6 +3,7 @@
   flex: auto;
   overflow: hidden;
 }
+
 .Room h1{
   margin-left: 2%;
   background-color: #DF4A3D;
@@ -12,9 +13,11 @@
   font-family: 'Londrina Solid', sans-serif;
   color: white;
 }
+
 .main_container{
   height: 100%;
 }
+
 .chat_display{
   padding-right: 5%;
   padding-left: 5%;
@@ -22,24 +25,7 @@
   overflow-y: scroll;
 
 }
-.message{
-  margin-bottom:15px;
-}
-.message_info
-{
-  padding-bottom: 5px;
-}
-.user{
-  font-weight: bold;
-}
-.post_date{
-  color:#90949c;
-  font-size:14px;
-}
-.user_input{
-  height: 25%;
-  border-top:1px solid #90949cc5;
-}
+
 .message_bubble{
   padding: 10px 10px;
   border-bottom-left-radius: 25px;

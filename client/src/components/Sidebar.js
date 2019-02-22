@@ -9,7 +9,6 @@ async function fetchRooms(setRooms, setLoading) {
   const response = await fetch('/room/all', { credentials: 'include' })
   if (response.ok) {
     const roomsResponse = await response.json()
-    console.log(roomsResponse)
     setRooms(roomsResponse.data)
   }
   setLoading(false)
