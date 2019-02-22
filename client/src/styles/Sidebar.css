@@ -1,11 +1,11 @@
 .Sidebar {
   border-right: 3px solid black;
-  height: 100%;
   width: 350px;
   background: #eee;
   flex:30%;
 }
 .sidebar_header{
+  min-height:70px;
   height:10vh;
 }
 .Sidebar h1{

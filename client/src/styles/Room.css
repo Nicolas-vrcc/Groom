@@ -19,7 +19,7 @@
 .chat_display{
   padding-right: 5%;
   padding-left: 5%;
-  height:75%;
+  height:75vh;
   overflow-y: scroll;
 
 }
@@ -40,6 +40,7 @@
 .user_input{
   height: 25%;
   border-top:1px solid #90949cc5;
+  position: sticky;
 }
 .message_bubble{
   padding: 10px 10px;
