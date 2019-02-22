@@ -36,7 +36,7 @@ class RoomRouterClass {
         })
 
         // Get room messages
-        roomRouter.get('/messages', (req, res) => {
+        roomRouter.post('/messages', (req, res) => {
             const { room } = req.body
             getRoomMessages(room)
                 .then((data) => res.json({ message: 'Showing messages', data }))

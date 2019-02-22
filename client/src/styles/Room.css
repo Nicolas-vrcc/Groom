@@ -4,6 +4,7 @@
   overflow: hidden;
   
 }
+
 .Room h1{
   margin-left: 2%;
   background-color: #DF4A3D;
@@ -13,9 +14,11 @@
   font-family: 'Londrina Solid', sans-serif;
   color: white;
 }
+
 .main_container{
   height: 100%;
 }
+
 .chat_display{
   padding-right: 5%;
   padding-left: 5%;
