@@ -1,25 +1,27 @@
 const express = require('express')
 const path = require('path')
-require('dotenv').config()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const morgan = require('morgan')
 const cors = require('cors')
+const http = require('http')
+const dotenv = require('dotenv')
 const mainRouter = require('./routes/main.router')
 const dbConnect = require('./services/dbconnect')
 const handleErrors = require('./services/error')
+const SocketService = require('./services/socket')
 
+dotenv.config()
+// Setup server with Express and Socket.io
 const app = express()
+const server = http.Server(app)
+const socket = new SocketService(server)
 
-// Setup Socket.io
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
-
-io.on('connection', () => {
-    console.log('new user')
-})
-
-class ServerCLass{
+class ServerCLass {
     init(){
+        // Log requests
+        app.use(morgan('tiny'))
+
         // Allow requests
         app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
 
@@ -31,13 +33,19 @@ class ServerCLass{
         app.use(cookieParser())
 
         // Serve the static files from the React app
-        app.use(express.static(path.join(__dirname, 'client/build')))
+        // app.use(express.static(path.join(__dirname, 'client/build')))
+
+        // Add socket to requests
+        app.use(function (req, res, next) {
+            req.io = socket
+            next()
+        })
 
         // Setup the API routes
         app.use('/api', mainRouter)
 
         // Handles any requests that don't match the ones above
-        app.get('*', (req, res) => {
+        app.get('/', (req, res) => {
             res.sendFile(path.join(__dirname + '/client/build/index.html'))
         })
 
@@ -52,12 +60,7 @@ class ServerCLass{
             .then(db => {
                 let port = 5000
                 // Start server
-                app.listen(port, () => {
-                    console.log({
-                        monngo: `BDD is connected ${db}!`,
-                        server: `Server listening on port ${port}!`
-                    })
-                })
+                server.listen(port)
             })
             .catch(err => console.log(`Error MongoDB ${err}`))
     }

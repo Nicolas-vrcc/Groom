@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useSocket } from 'use-socketio'
 import Message from './Message'
 import MessageInput from './MessageInput'
 import '../styles/Room.css'
@@ -46,6 +47,11 @@ const Room = ({ match }) => {
       setError(null)
     }
   }, [match]) // Only run on mount
+
+  const socket = useSocket('new message', newMessage => {
+    console.log('new message from socket', newMessage)
+    setMessages([newMessage, ...messages])
+  })
 
   return (
     <div className="Room">

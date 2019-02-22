@@ -7,10 +7,14 @@ import UserProvider from './components/UserProvider'
 import './styles/index.css'
 import App from './components/App'
 
+console.log(process.env.REACT_APP_SOCKET_URL)
+
 render((
     <Router>
-        <UserProvider>
-            <App/>
-        </UserProvider>
+        <ClientSocket url={process.env.REACT_APP_SOCKET_URL}>
+            <UserProvider>
+                <App/>
+            </UserProvider>
+        </ClientSocket>
     </Router>
 ), document.getElementById('root'))

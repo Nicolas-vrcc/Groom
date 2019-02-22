@@ -17,6 +17,9 @@ class MessageRouterClass {
         messageRouter.post('/', (req, res) => {
             const { content, room } = req.body
             const { username } = req.user
+            const date = Date.now()
+            // Send message via socket
+            req.io.sendMessage(content, room, date, username)
             sendMessage(content, room, username)
                 .then((data) => res.json({ message: 'Message sent', data }))
                 .catch((error) => res.json({ message: 'Could not send message', error }))
