@@ -28,8 +28,11 @@ const Sidebar = () => {
 
   return (
     <div className="Sidebar">
+      <div class="sidebar_header">
       <h1>Welcome, {user.username} !</h1>
       <Logout />
+      </div>
+      <div className="room_list">
       {loading ?
         <p>Loading rooms</p>
         :
@@ -38,6 +41,7 @@ const Sidebar = () => {
           :
           <p>No available rooms</p>
       }
+      </div>
       <CreateRoom rooms={rooms} setRooms={setRooms} />
     </div>
   )

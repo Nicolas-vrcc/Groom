@@ -3,4 +3,17 @@
   height: 100%;
   width: 350px;
   background: #eee;
+  flex:30%;
+}
+.sidebar_header{
+  height:10vh;
+}
+.Sidebar h1{
+  margin:0;
+  
+
+}
+.room_list{
+  overflow-y:scroll;
+  height:80vh;
 }
