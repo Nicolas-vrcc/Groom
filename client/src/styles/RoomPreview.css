@@ -2,9 +2,13 @@
   border-top: 1px solid black;
   width: 100%;
   padding: 10px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: black;
 }
 
 .RoomPreview__name {
   font-weight: bold;
   font-size: 2.4rem;
-}
+} 

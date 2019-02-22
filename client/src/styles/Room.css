@@ -1,6 +1,6 @@
 .Room {
   background: #fff;
-  flex: auto;
+  flex: 75%;
   overflow: hidden;
   
 }
@@ -43,7 +43,6 @@
 .user_input{
   height: 25%;
   border-top:1px solid #90949cc5;
-  position: sticky;
 }
 .message_bubble{
   padding: 10px 10px;

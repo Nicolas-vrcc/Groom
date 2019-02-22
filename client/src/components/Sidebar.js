@@ -28,7 +28,7 @@ const Sidebar = () => {
 
   return (
     <div className="Sidebar">
-      <div class="sidebar_header">
+      <div className="sidebar_header">
       <h1>Welcome, {user.username} !</h1>
       <Logout />
       </div>
