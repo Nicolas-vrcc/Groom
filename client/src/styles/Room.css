@@ -7,7 +7,7 @@
 
 .Room h1{
   margin-left: 2%;
-  background-color: #DF4A3D;
+  background-color:rgb(217, 36, 2);
   margin:0;
   padding:0.67em;
   margin-bottom: 10px;
@@ -17,6 +17,8 @@
 
 .main_container{
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .chat_display{
@@ -40,9 +42,10 @@
   color:#90949c;
   font-size:14px;
 }
-.user_input{
-  height: 25%;
+.MessageInput{
   border-top:1px solid #90949cc5;
+  position: sticky;
+  flex: 1 1 auto;
 }
 .message_bubble{
   padding: 10px 10px;

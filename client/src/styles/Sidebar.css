@@ -5,11 +5,13 @@
   flex:25%;
 }
 .sidebar_header{
-  min-height:70px;
+  min-height:120px;
   height:10vh;
+  border-bottom: 3px solid black;
 }
 .Sidebar h1{
   margin:0;
+  padding:10px;
   
 
 }
