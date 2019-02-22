@@ -6,7 +6,10 @@ import Home from '../components/Home'
 import Landing from './Landing'
 
 async function fetchUser(setUser, setLoading) {
-    const response = await fetch('/user', { credentials: 'include' })
+    const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/user`,
+        { credentials: 'include' }
+    )
     if (response.ok) {
         const userResponse = await response.json()
         setUser(userResponse.user)

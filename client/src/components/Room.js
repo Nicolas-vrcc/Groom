@@ -4,20 +4,24 @@ import MessageInput from './MessageInput'
 import '../styles/Room.css'
 
 async function fetchMessages(room, setMessages, setLoading, setError) {
-  const response = await fetch('/room/messages', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ room })
-  })
-  if (response.ok) {
-    const messagesResponse = await response.json()
-    setMessages(messagesResponse.data)
-  } else {
-    setError(response.message)
+  try {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/room/messages`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ room })
+    })
+    if (response.ok) {
+      const messagesResponse = await response.json()
+      setMessages(messagesResponse.data)
+    } else {
+      setError(response.message)
+    }
+  } catch(error) {
+    setError('Could not fetch messages')
   }
   setLoading(false)
 }
@@ -27,6 +31,11 @@ const Room = ({ match }) => {
   const [loading, setLoading] = useState(true)
   const [messages, setMessages] = useState(true)
   const [error, setError] = useState(null)
+
+  // Set page title on first render
+  useEffect(() => {
+    document.title = `${name} - Groom`
+  }, [])
 
   useEffect(() => {
     fetchMessages(name, setMessages, setLoading, setError)

@@ -12,7 +12,7 @@ const Signup = () => {
         e.preventDefault()
         setLoading(true)
         // posts user to database
-        const response = await fetch('/user/signup', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/signup`, {
             method: 'POST',
             credentials: 'include',
             headers: {

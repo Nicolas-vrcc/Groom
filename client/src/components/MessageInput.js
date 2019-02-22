@@ -3,7 +3,7 @@ import '../styles/MessageInput.css'
 
 async function sendMessage(room, content, setLoading, setError) {
   try {
-    await fetch('/message', {
+    await fetch(`${process.env.REACT_APP_API_URL}/message`, {
       method: 'POST',
       credentials: 'include',
       headers: {

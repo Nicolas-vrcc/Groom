@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../styles/CreateRoom.css'
 
 async function createRoom(setRooms, setLoading, name, rooms) {
-  const response = await fetch('/room', {
+  const response = await fetch(`${process.env.REACT_APP_API_URL}/room`, {
     method: 'POST',
     credentials: 'include',
     headers: {

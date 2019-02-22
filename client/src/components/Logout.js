@@ -10,7 +10,7 @@ const Logout = () => {
         e.preventDefault()
         setLoading(true)
         // posts user to database
-        const response = await fetch('/user/logout', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/user/logout`, {
             method: 'POST',
             credentials: 'include',
         })

@@ -22,10 +22,7 @@ class RoomRouterClass {
             // Create room
             createRoom(name, username)
                 .then((data) => res.json({ data, message: 'Room created' }))
-                .catch((error) => res.status(400).json({
-                    error,
-                    message: 'Cannot create room'
-                }))
+                .catch((error) => res.status(400).json({ error, message: 'Cannot create room' }))
         })
 
         // Get all rooms
@@ -40,7 +37,7 @@ class RoomRouterClass {
             const { room } = req.body
             getRoomMessages(room)
                 .then((data) => res.json({ message: 'Showing messages', data }))
-                .then((error) => res.status(400).json({ message: 'Cannot show messages', error }))
+                .catch((error) => res.status(400).json({ message: 'Cannot show messages', error }))
         })
     }
 

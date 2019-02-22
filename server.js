@@ -1,16 +1,28 @@
 const express = require('express')
 const path = require('path')
+require('dotenv').config()
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 const mainRouter = require('./routes/main.router')
 const dbConnect = require('./services/dbconnect')
 const handleErrors = require('./services/error')
 
 const app = express()
 
+// Setup Socket.io
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
+
+io.on('connection', () => {
+    console.log('new user')
+})
+
 class ServerCLass{
     init(){
-        
+        // Allow requests
+        app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }))
+
         // Body-parser
         app.use(bodyParser.json({ limit: '10mb' }))
         app.use(bodyParser.urlencoded({ extended: true }))

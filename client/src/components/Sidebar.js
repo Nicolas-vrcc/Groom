@@ -3,13 +3,22 @@ import '../styles/Sidebar.css'
 import { UserContext } from './UserProvider'
 import RoomPreview from './RoomPreview'
 import Logout from './Logout'
-import CreateRoom from './CreateRoom';
+import CreateRoom from './CreateRoom'
 
-async function fetchRooms(setRooms, setLoading) {
-  const response = await fetch('/room/all', { credentials: 'include' })
-  if (response.ok) {
+async function fetchRooms(setRooms, setLoading, setError) {
+  try {
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}/room/all`,
+      { credentials: 'include' }
+    )
     const roomsResponse = await response.json()
-    setRooms(roomsResponse.data)
+    if (response.ok) {
+      setRooms(roomsResponse.data)
+    } else {
+      setError(response.message)
+    }
+  } catch(error) {
+    setError('Could not fetch rooms')
   }
   setLoading(false)
 }
@@ -18,12 +27,13 @@ const Sidebar = () => {
   const { user } = useContext(UserContext)
   const [rooms, setRooms] = useState([])
   const [loading, setLoading] = useState([true])
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     // Set page title on first render
     document.title = 'Groom - Open chat rooms'
     // Fetch rooms on first render
-    fetchRooms(setRooms, setLoading)
+    fetchRooms(setRooms, setLoading, setError)
   }, [])
 
   return (
@@ -33,6 +43,7 @@ const Sidebar = () => {
       <Logout />
       </div>
       <div className="room_list">
+      {error ? <p>{error}</p> : null}
       {loading ?
         <p>Loading rooms</p>
         :
